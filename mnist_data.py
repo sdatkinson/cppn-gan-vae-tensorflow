@@ -30,9 +30,9 @@ def extract_images(filename):
       raise ValueError(
           'Invalid magic number %d in MNIST image file: %s' %
           (magic, filename))
-    num_images = _read32(bytestream)
-    rows = _read32(bytestream)
-    cols = _read32(bytestream)
+    num_images = int(_read32(bytestream))
+    rows = int(_read32(bytestream))
+    cols = int(_read32(bytestream))
     buf = bytestream.read(rows * cols * num_images)
     data = np.frombuffer(buf, dtype=np.uint8)
     data = data.reshape(num_images, rows, cols, 1)
@@ -53,7 +53,7 @@ def extract_labels(filename, one_hot=False):
       raise ValueError(
           'Invalid magic number %d in MNIST label file: %s' %
           (magic, filename))
-    num_items = _read32(bytestream)
+    num_items = int(_read32(bytestream))
     buf = bytestream.read(num_items)
     labels = np.frombuffer(buf, dtype=np.uint8)
     if one_hot:
